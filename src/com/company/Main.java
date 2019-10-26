@@ -6,7 +6,7 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Задача 1");
-        System.out.println(Palindrome("шалаш"));
+        System.out.println(isPalindrome("шалаш"));
         System.out.println("Задача 2");
         int[] array = arrayOfAGivenSize(6);
         System.out.println(Arrays.toString(array));
@@ -24,17 +24,18 @@ public class Main {
         System.out.println("Задача 8");
         System.out.println(Arrays.toString(reverseArray(array)));
         System.out.println("Задача 9");
-        System.out.println(sortedArray(array));
+        System.out.println(isSorted(array));
         System.out.println("Задача 10");
-        System.out.println(Arrays.toString(shuffledArray(array)));
+        System.out.println(Arrays.toString(shuffle(array)));
         System.out.println("Задача 11");
-        System.out.println(Arrays.toString(growingArray(array)));
+        System.out.println(Arrays.toString(sortArrayAscending(array)));
         System.out.println("Задача 12");
-        twoDimensionalArray(2,3);
+        int[][] array3 = createTwoDimensionalArray(2, 3);
+
 
     }
 
-    public static Boolean Palindrome(String string) {          //Задача 1 - является ли палиндромом
+    public static Boolean isPalindrome(String string) {          //Задача 1 - является ли палиндромом
         String reversedString = "";
         for (int i = string.length() - 1; i >= 0; i--) {
             reversedString += string.charAt(i);
@@ -115,13 +116,14 @@ public class Main {
 
     public static int[] reverseArray(int[] array) {          //Задача 8 - значения в обратном порядке
         System.out.println(Arrays.toString(array));
-            for (int g = array.length - 1; g >= 0; g--) {
-                System.out.print(array[g]+" ");
-            }
-        return array;
+        int[] array2 = new int[array.length];
+        for (int g = 0; g < array.length; g++) {
+            array2[g] = array[array.length - 1 - g];
+        }
+        return array2;
     }
 
-    public static boolean sortedArray(int[] array) {        //Задача 9 - проверить сортировку оп возростанию
+    public static boolean isSorted(int[] array) {        //Задача 9 - проверить сортировку по возростанию
         System.out.println(Arrays.toString(array));
         for (int i = 0; i < array.length; i++) {
             if (array[i] > array[i + 1]) {
@@ -131,7 +133,7 @@ public class Main {
         return true;
     }
 
-    public static int[] shuffledArray(int[] array) {        //Задача 10 - перетасовать в случайном порядке
+    public static int[] shuffle(int[] array) {        //Задача 10 - перетасовать в случайном порядке
         System.out.println(Arrays.toString(array));
         Random random = new Random();
         for (int i = array.length - 1; i > 0; i--) {
@@ -143,7 +145,7 @@ public class Main {
         return array;
     }
 
-    public static int[] growingArray(int[] array) {           //Задача 11 - сортировка по возростанию
+    public static int[] sortArrayAscending(int[] array) {           //Задача 11 - сортировка по возростанию
         System.out.println(Arrays.toString(array));
         for (int n = 0; n < array.length; n++) {
             for (int g = 0; g < array.length - 1; g++) {
@@ -157,20 +159,19 @@ public class Main {
         return array;
     }
 
-    public static void twoDimensionalArray(int line, int column) {      //Задача 12 - двумерный массив со случайными числами
-        int[][] array = new int[line][column];
+    public static int[][] createTwoDimensionalArray(int line, int column) {      //Задача 12 - двумерный массив со случайными числами
+        int[][] array3 = new int[line][column];
         Random random = new Random();
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                array[i][j] = random.nextInt(10) + 1;
+        for (int i = 0; i < line; i++) {
+            for (int j = 0; j < column; j++) {
+                array3[i][j] = random.nextInt(10) + 1;
+                System.out.print(array3[i][j] + " ");
+                if (j==(column-1)){
+                    System.out.println();
+                }
             }
         }
-        for (int i = 0; i < array.length; i++, System.out.println()) {
-            for (int j = 0; j < array[i].length; j++) {
-                System.out.print(array[i][j] + " ");
-            }
-        }
-
+        return array3;
     }
 
 }
