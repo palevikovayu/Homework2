@@ -29,7 +29,7 @@ public class Main {
         System.out.println(rezOfDiagonalEl(6));
     }
 
-    public static void monthsOfAYear() {
+    public static void monthsOfAYear() {                       //Задаа 1
         String name = MonthsOfAYear.FEBRUARY.name();
         System.out.println(name);
     }
