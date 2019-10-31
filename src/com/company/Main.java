@@ -1,244 +1,177 @@
 package com.company;
 
-import com.sun.deploy.net.proxy.WDefaultBrowserProxyConfig;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
 import java.util.Arrays;
 import java.util.Random;
 
 public class Main {
-
     public static void main(String[] args) {
         System.out.println("Задача 1");
-        monthsOfAYear();
+        System.out.println(isPalindrome("шалаш"));
         System.out.println("Задача 2");
-        daysInAMonth(MonthsOfAYear.FEBRUARY);
+        int[] array = arrayOfAGivenSize(6);
+        System.out.println(Arrays.toString(array));
         System.out.println("Задача 3");
-        System.out.println(difBetweenMaxAndMin(6));
+        System.out.println(indexOfX(array, 3));
         System.out.println("Задача 4");
-        System.out.println(arrayComparison(6));
+        int[] x = changeMinAndMax(array);
+        System.out.println(Arrays.toString(array));
         System.out.println("Задача 5");
-        missingNumberInArray();
+        System.out.println(arithmeticAverageOfArray(array));
         System.out.println("Задача 6");
-        int[][] array = minElIn2DArray(4, 5);
+        System.out.println(numberOfNegativeElements(array));
         System.out.println("Задача 7");
-        int[][] x = changeMinAndMaxElIn2DArray(array);
+        System.out.println(Arrays.toString(arrayWithoutElement(array, 3)));
         System.out.println("Задача 8");
-        int[][] y = arrayWithoutOddNumber(array);
+        System.out.println(Arrays.toString(reverseArray(array)));
         System.out.println("Задача 9");
-        System.out.println(rezOfDiagonalEl(6));
+        System.out.println(isSorted(array));
+        System.out.println("Задача 10");
+        System.out.println(Arrays.toString(shuffle(array)));
+        System.out.println("Задача 11");
+        System.out.println(Arrays.toString(sortArrayAscending(array)));
+        System.out.println("Задача 12");
+        int[][] array3 = createTwoDimensionalArray(2, 3);
+
+
     }
 
-    public static void monthsOfAYear() {                       //Задаа 1
-        String name = MonthsOfAYear.FEBRUARY.name();
-        System.out.println(name);
-    }
-
-    public static void daysInAMonth(MonthsOfAYear month) {        //Задача 2 - количество дней в месяце
-        int numDays = 0;
-        switch (month) {
-            case JANUARY:
-            case MARCH:
-            case MAY:
-            case JULY:
-            case AUGUST:
-            case OCTOBER:
-            case DECEMBER:
-                numDays = 31;
-                break;
-            case APRIL:
-            case JUNE:
-            case SEPTEMBER:
-            case NOVEMBER:
-                numDays = 30;
-                break;
-            case FEBRUARY:
-                numDays = 28;
-                break;
-            default:
-                System.out.println("Несуществующий месяц");
-                break;
+    public static Boolean isPalindrome(String string) {          //Задача 1 - является ли палиндромом
+        String reversedString = "";
+        for (int i = string.length() - 1; i >= 0; i--) {
+            reversedString += string.charAt(i);
         }
-        System.out.println("В " + month + " " + numDays + " дней");
-
+        return string.equals(reversedString);
     }
 
-    public static int difBetweenMaxAndMin(int size) {           //Задача 3 - разница между мах и min элементами массива
+    public static int[] arrayOfAGivenSize(int size) {        //Задача 2 - массив со случайными числами
         int[] array = new int[size];
-        Random r = new Random();
-        for (int i = 0; i < array.length; i++) {
-            array[i] = r.nextInt(10);
+        Random random = new Random();
+        for (int i = 0; i < size; i++) {
+            array[i] = random.nextInt(10);
         }
-        int max = 0;
-        int min = array[0];
-        System.out.println(Arrays.toString(array));
-        for (int i = 0; i < array.length; i++) {
-            if (max < array[i]) {
-                max = array[i];
-            }
-            if (min > array[i]) {
-                min = array[i];
-            }
-        }
-        return max - min;
+        return array;
     }
 
-    public static boolean arrayComparison(int size) {           //Задача 4 - одинаковы ли массивы
-        int[] array1 = new int[size];
-        int[] array2 = new int[size];
-        Random r = new Random();
-        for (int i = 0; i < array1.length; i++) {
-            array1[i] = r.nextInt(10);
-            array2[i] = r.nextInt(10);
-        }
-        System.out.println(Arrays.toString(array1));
-        System.out.println(Arrays.toString(array2));
-        for (int j = 0; j < array1.length; j++) {
-            if (array1[j] == array2[j]) {
-                return true;
+    public static int indexOfX(int[] array, int x) {         //Задача 3 - позиция числа х
+        System.out.println(Arrays.toString(array));
+        for (int i = 0; i < array.length; i++) {
+            if (x == array[i]) {
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 
-    public static void missingNumberInArray() {           //Задача 5 - пропущенное число в массиве
-        int[] array = {1, 0, 2, 3, 7, 5, 4, 8, 9};
-        Arrays.sort(array);
+    public static int[] changeMinAndMax(int[] array) {            //Задача 4 - поменять местами min и max
         System.out.println(Arrays.toString(array));
+        int minNumber = array[0];
+        int minIndex = 0;
+        int maxNumber = array[0];
+        int maxIndex = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (minNumber < array[i]) {
+                minNumber = array[i];
+                minIndex = i;
+            }
+            if (maxNumber > array[i]) {
+                maxNumber = array[i];
+                maxIndex = i;
+            }
+        }
+        array[minIndex] = maxNumber;
+        array[maxIndex] = minNumber;
+        return array;
+    }
+
+    public static double arithmeticAverageOfArray(int[] array) {     //Задача 5 - среднее арифметическое элементов массива
+        double sum = 0;
+        for (int i = 0; i < array.length; i++) {
+            sum += array[i];
+        }
+        return sum / array.length;
+    }
+
+    public static int numberOfNegativeElements(int[] array) {         //Задача 6 - количество отрицательных элементов
+        int sum = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] < 0) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    public static int[] arrayWithoutElement(int[] array, int delete) {       //Задача 7 - удалить элемент массива
+        System.out.println(Arrays.toString(array));
+        int[] array2 = new int[array.length - 1];
         int j = 0;
-        for (int i = 0; i < array.length - 1; i++) {
-            if (array[i + 1] != array[i] + 1) {
-                j = array[i] + 1;
+        for (int i = 0; i < array.length; i++) {
+            if (i != delete) {
+                array2[j] = array[i];
+                j++;
             }
         }
-        System.out.println("Пропущено число " + j);
+        return array2;
     }
 
-    public static int[][] minElIn2DArray(int length, int width) {   //Задача 6 - минимальный элемент двумерного массива
-        int[][] array = new int[length][width];
-        Random r = new Random();
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                array[i][j] = r.nextInt(10) + 5;
-            }
+    public static int[] reverseArray(int[] array) {          //Задача 8 - значения в обратном порядке
+        System.out.println(Arrays.toString(array));
+        int[] array2 = new int[array.length];
+        for (int g = 0; g < array.length; g++) {
+            array2[g] = array[array.length - 1 - g];
         }
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(Arrays.toString(array[i]));
-        }
-        int k = array[0][0];
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                if (k > array[i][j]) {
-                    k = array[i][j];
-                }
-            }
-        }
-        System.out.printf("Минимальный элемент массива %d", k);
-        System.out.println();
-        return array;
+        return array2;
     }
 
-    public static int[][] changeMinAndMaxElIn2DArray(int[][] array) {   //Задача 7 - Поменять местами мин и макс элементы двумерного массива
+    public static boolean isSorted(int[] array) {        //Задача 9 - проверить сортировку по возростанию
+        System.out.println(Arrays.toString(array));
         for (int i = 0; i < array.length; i++) {
-            System.out.println(Arrays.toString(array[i]));
-        }
-        System.out.println("Измененный массив");
-        int maxEl = array[0][0];
-        int minEl = array[0][0];
-        int maxIndexLength = 0;
-        int maxIndexWidth = 0;
-        int minIndexLength = 0;
-        int minIndexWidth = 0;
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                if (maxEl < array[i][j]) {
-                    maxEl = array[i][j];
-                    maxIndexLength = i;
-                    maxIndexWidth = j;
-                }
-                if (minEl > array[i][j]) {
-                    minEl = array[i][j];
-                    minIndexLength = i;
-                    minIndexWidth = j;
-                }
+            if (array[i] > array[i + 1]) {
+                return false;
             }
         }
-        array[maxIndexLength][maxIndexWidth] = minEl;
-        array[minIndexLength][minIndexWidth] = maxEl;
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(Arrays.toString(array[i]));
+        return true;
+    }
+
+    public static int[] shuffle(int[] array) {        //Задача 10 - перетасовать в случайном порядке
+        System.out.println(Arrays.toString(array));
+        Random random = new Random();
+        for (int i = array.length - 1; i > 0; i--) {
+            int index = random.nextInt(i + 1);
+            int temp = array[index];
+            array[index] = array[i];
+            array[i] = temp;
         }
         return array;
     }
 
-    public static int[][] arrayWithoutOddNumber(int[][] array) {      //Задача 8 - заменить все нечетные элементы массива
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(Arrays.toString(array[i]));
-        }
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                if (array[i][j] % 2 != 0) {
-                    if (j == 0) {
-                        array[i][j] = 0;
-                    } else {
-                        array[i][j] = array[i][j - 1];
-                    }
+    public static int[] sortArrayAscending(int[] array) {           //Задача 11 - сортировка по возростанию
+        System.out.println(Arrays.toString(array));
+        for (int n = 0; n < array.length; n++) {
+            for (int g = 0; g < array.length - 1; g++) {
+                if (array[g] > array[g + 1]) {
+                    int tmp = array[g];
+                    array[g] = array[g + 1];
+                    array[g + 1] = tmp;
                 }
             }
-        }
-        System.out.println("Измененный массив");
-        for (int k = 0; k < array.length; k++) {
-            System.out.println(Arrays.toString(array[k]));
         }
         return array;
     }
 
-    public static int rezOfDiagonalEl(int n) {            //Задача 9 - произведение диагональных элементов
-        int[][] array = new int[4][5];
-        Random r = new Random();
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                array[i][j] = r.nextInt(9) + 1;
-            }
-        }
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(Arrays.toString(array[i]));
-        }
-        int rez = 0;
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                if (array[i][j] == n) {
-                    if (i == 0) {
-                        if (j == 0) {
-                            rez = array[i + 1][j + 1];
-                        }
-                        if (j == array[i].length - 1) {
-                            rez = array[i + 1][j - 1];
-                        }
-                        rez = array[i + 1][j - 1] * array[i + 1][j + 1];
-                    }
-                    if (j == 0) {
-                        if (i == array.length - 1) {
-                            rez = array[i - 1][j + 1];
-                        }
-                        rez = array[i - 1][j + 1] * array[i + 1][j + 1];
-                    }
-                    if (i == array.length - 1) {
-                        if (j == array[i].length - 1) {
-                            rez = array[i - 1][j - 1];
-                        }
-                        rez = array[i - 1][j - 1] * array[i - 1][j + 1];
-                    }
-                    if (j == array[i].length - 1) {
-                        rez = array[i - 1][j - 1] * array[i + 1][j - 1];
-                    }
-                    rez = array[i - 1][j - 1] * array[i - 1][j + 1] * array[i + 1][j - 1] * array[i + 1][j + 1];
+    public static int[][] createTwoDimensionalArray(int line, int column) {      //Задача 12 - двумерный массив со случайными числами
+        int[][] array3 = new int[line][column];
+        Random random = new Random();
+        for (int i = 0; i < line; i++) {
+            for (int j = 0; j < column; j++) {
+                array3[i][j] = random.nextInt(10) + 1;
+                System.out.print(array3[i][j] + " ");
+                if (j==(column-1)){
+                    System.out.println();
                 }
             }
         }
-        return rez;
+        return array3;
     }
+
 }
-
-
-
